@@ -127,7 +127,7 @@ namespace Back_Caja_Sucursal_LATAM.Services
             }
         }
 
-        public Response insertTransaccion(Int64 saldo, Int64 noTarjeta, int noCajero)
+        public Response insertTransaccion(Int64 saldo, Int64 noTarjeta, Int64 noCajero)
         {
             Response result = new Response();
             try
@@ -137,35 +137,19 @@ namespace Back_Caja_Sucursal_LATAM.Services
                     db.Open();
                     result = db.Query<Response>("sp_InsertTransaccionRetiro", new { Saldo = saldo, NoTarjeta = noTarjeta, NoCajero= noCajero }, commandType: CommandType.StoredProcedure).FirstOrDefault();
 
-                    //if (result == null)
-                    //{
-                    //    return result = new Response()
-                    //    {
-                    //        Estatus = "Incorrecto",
-                    //        Mensaje = "Registro no se pudo guardar correctamente"
-                    //    };
+                    if (result == null)
+                    {
+                        return result = new Response()
+                        {
+                            Estatus = "Incorrecto",
+                            Mensaje = "Registro no se pudo guardar correctamente"
+                        };
 
-                    //}
-                    //if (result. == 0)
-                    //{
-                    //    return result = new Response()
-                    //    {
-                    //        Estatus = "Error al guardar",
-                    //        Mensaje = "Registro " + prod.Name + " ya existe en el base de datos!"
-                    //    };
-                    //}
-                    //if (result.Name != null && result.Creation != null)
-                    //{
-                    //    return result = new Response()
-                    //    {
-                    //        Name = "Correcto",
-                    //        Mensaje = "Registro " + response.Name + " guardado correctamente"
-                    //    };
-                    //}
-
-
-                    db.Close();
-
+                    }
+                    if (result.Estatus.Equals("Exitoso"))
+                    {
+                        return result;
+                    }
                     return result;
                 }
             }
