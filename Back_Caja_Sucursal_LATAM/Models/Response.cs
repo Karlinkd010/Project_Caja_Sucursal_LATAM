@@ -1,4 +1,4 @@
-﻿namespace BackendWebApi.Models
+﻿namespace Back_Caja_Sucursal_LATAM.Models
 {
     public class Response
     {
