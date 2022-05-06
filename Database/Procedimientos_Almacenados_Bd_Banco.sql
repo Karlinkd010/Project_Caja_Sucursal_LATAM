@@ -40,7 +40,7 @@ END
 go
 
 
---Valida si existe Tarjeta
+--Consulta de saldo a cajero
 CREATE PROCEDURE sp_getConsultaSaldoCajero(
 	@NoCajero BIGINT = 0
 )
@@ -151,7 +151,7 @@ END
 go
 
 
---Valida Saldo del cliente y del cajero
+--Transaccion Retiro
 CREATE PROCEDURE sp_InsertTransaccionRetiro(
 	@Saldo BIGINT = 0,
 	@NoTarjeta BIGINT = 0,
