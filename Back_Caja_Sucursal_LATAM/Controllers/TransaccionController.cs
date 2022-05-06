@@ -16,30 +16,33 @@ namespace Back_Caja_Sucursal_LATAM.Controllers
             _configuration = configuration;
             _TransaccInterface = transaccService;
         }
-        ///listado de productos
-        //[HttpGet]
-        //public JsonResult GetProducts()
-        //{
-        //    var products = new List<Product>();
-        //    products = _productInterface.getProducts().ToList();
 
-        //    if (products == null)
-        //    {
-        //        return Json(new Response()
-        //        {
-        //            Name = "Incorrecto",
-        //            Mensaje = "Datos vacios"
-        //        });
-        //    }
-
-        //    return Json(products);
-        //}
-
-
-        ///lista producto detalle
-        [Route("{noTarjeta}")]
+        ///Consulta saldo a cejero
+        [Route("ConsultaSaldoCajero/{noCajero}")]
         [HttpGet]
-        public JsonResult GetTarjeta(Int64 noTarjeta)
+        public JsonResult GetConsultaSaldoCajero(Int64 noCajero)
+        {
+            var respuesta = new Response();
+
+            if (noCajero.Equals(""))
+            {
+                return Json(new Response()
+                {
+                    Estatus = "Incorrecto",
+                    Mensaje = "¡Datos vacios, llene los campos!"
+                });
+
+            }
+            respuesta = _TransaccInterface.getConsultaSaldoCajero(noCajero);
+
+            return Json(respuesta);
+        }
+
+
+        ///Consulta tarjeta
+        [Route("ValidaTarjeta/{noTarjeta}")]
+        [HttpGet]
+        public JsonResult getValidaTarjeta(Int64 noTarjeta)
         {
             var respuesta = new Response();
 
@@ -59,9 +62,9 @@ namespace Back_Caja_Sucursal_LATAM.Controllers
 
 
         ///lista producto detalle
-        [Route("ConsultaNip/{noTarjeta}/{noNip}")]
+        [Route("ValidaNip/{noTarjeta}/{noNip}")]
         [HttpGet]
-        public JsonResult GetNip( Int64 noTarjeta, int noNip)
+        public JsonResult GetValidaNip( Int64 noTarjeta, int noNip)
         {
             var respuesta = new Response();
 
@@ -81,7 +84,7 @@ namespace Back_Caja_Sucursal_LATAM.Controllers
 
 
         ///lista producto detalle
-        [Route("ConsultaSaldo/{saldo}/{noTarjeta}/{noCajero}")]
+        [Route("ConsultaSaldoClienteCajero/{saldo}/{noTarjeta}/{noCajero}")]
         [HttpGet]
         public JsonResult GetConsultaSaldo(Int64 saldo, Int64 noTarjeta, Int64 noCajero)
         {
@@ -101,9 +104,9 @@ namespace Back_Caja_Sucursal_LATAM.Controllers
             return Json(respuesta);
         }
 
-        [Route("{saldo}/{noTarjeta}/{noCajero}")]
+        [Route("TransacciónRetiro/{saldo}/{noTarjeta}/{noCajero}")]
         [HttpPost]
-        public JsonResult insertTransaccion(Int64 saldo, Int64 noTarjeta, Int64 noCajero)
+        public JsonResult postTransaccionRetiro(Int64 saldo, Int64 noTarjeta, Int64 noCajero)
         {
             var respuesta = new Response();
 
