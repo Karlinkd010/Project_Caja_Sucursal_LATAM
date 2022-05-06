@@ -59,9 +59,9 @@ namespace Back_Caja_Sucursal_LATAM.Controllers
 
 
         ///lista producto detalle
-        [Route("{noTarjeta}/{noNip}")]
+        [Route("ConsultaNip/{noTarjeta}/{noNip}")]
         [HttpGet]
-        public JsonResult GetNip(Int64 noTarjeta, int noNip)
+        public JsonResult GetNip( Int64 noTarjeta, int noNip)
         {
             var respuesta = new Response();
 
@@ -81,9 +81,9 @@ namespace Back_Caja_Sucursal_LATAM.Controllers
 
 
         ///lista producto detalle
-        [Route("{saldo}/{noTarjeta}/{noCajero}")]
+        [Route("ConsultaSaldo/{saldo}/{noTarjeta}/{noCajero}")]
         [HttpGet]
-        public JsonResult GetConsultaSaldo(Int64 saldo, Int64 noTarjeta, int noCajero)
+        public JsonResult GetConsultaSaldo(Int64 saldo, Int64 noTarjeta, Int64 noCajero)
         {
             var respuesta = new Response();
 
@@ -97,6 +97,26 @@ namespace Back_Caja_Sucursal_LATAM.Controllers
 
             }
             respuesta = _TransaccInterface.getConsultaSaldo(saldo,noTarjeta, noCajero);
+
+            return Json(respuesta);
+        }
+
+        [Route("{saldo}/{noTarjeta}/{noCajero}")]
+        [HttpPost]
+        public JsonResult insertTransaccion(Int64 saldo, Int64 noTarjeta, Int64 noCajero)
+        {
+            var respuesta = new Response();
+
+            if (noTarjeta == 0 || saldo == 0 || noCajero == 0)
+            {
+                return Json(new Response()
+                {
+                    Estatus = "Incorrecto",
+                    Mensaje = "¡Datos vacios!"
+                });
+
+            }
+            respuesta = _TransaccInterface.getConsultaSaldo(saldo, noTarjeta, noCajero);
 
             return Json(respuesta);
         }
