@@ -93,7 +93,39 @@ namespace Back_Caja_Sucursal_LATAM.Services
                 };
             }
         }
-       
+
+        public Response getConsultaSaldo(Int64 saldo,Int64 noTarjeta, int noCajero)
+        {
+            Response respuesta = new Response();
+            try
+            {
+                using (IDbConnection db = Connection)
+                {
+
+                    respuesta = db.Query<Response>("sp_getValidaSaldo", new { Saldo = saldo, NoTarjeta = noTarjeta, NoCajero= noCajero }, commandType: CommandType.StoredProcedure).FirstOrDefault();
+                    if (respuesta == null)
+                    {
+                        return respuesta = new Response()
+                        {
+                            Estatus = "Incorrecto",
+                            Mensaje = "¡Hubo algún Error en el Servidor!"
+                        };
+
+                    }
+                    return respuesta;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return new Response()
+                {
+                    Estatus = "Error",
+                    Mensaje = ex.Message
+                };
+            }
+        }
+
 
 
     }
