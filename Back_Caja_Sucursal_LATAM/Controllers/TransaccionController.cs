@@ -119,7 +119,7 @@ namespace Back_Caja_Sucursal_LATAM.Controllers
                 });
 
             }
-            respuesta = _TransaccInterface.getConsultaSaldo(saldo, noTarjeta, noCajero);
+            respuesta = _TransaccInterface.insertTransaccion(saldo, noTarjeta, noCajero);
 
             return Json(respuesta);
         }
