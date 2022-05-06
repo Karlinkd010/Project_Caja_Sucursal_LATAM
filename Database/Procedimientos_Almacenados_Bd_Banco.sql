@@ -163,20 +163,24 @@ BEGIN
 		@MensajeError VARCHAR(300) = ''
 	
 	BEGIN TRY
+		BEGIN TRAN
 
-	Insert into tbl_Transaccion (vchtipo_Accion,Fecha, Cantidad, Id_NoTarjeta,id_NoCajero) values ('Retiro', GETDATE(), @Saldo,@NoTarjeta,@NoCajero);
+				INSERT INTO tbl_Transaccion (vchtipo_Accion,Fecha, Cantidad, Id_NoTarjeta,id_NoCajero) VALUES ('Retiro', GETDATE(), @Saldo,@NoTarjeta,@NoCajero);
 
-	UPDATE tbl_Cuenta SET fltSaldo=(fltSaldo-@Saldo) FROM tbl_Cuenta
-       INNER JOIN tbl_Tarjeta
-        ON tbl_Cuenta.IntNumero_Cuenta = tbl_Tarjeta.id_NoCuenta
-		WHERE IntNumero_Tarjeta=@NoTarjeta;
+				UPDATE tbl_Cuenta SET fltSaldo=(fltSaldo-@Saldo) FROM tbl_Cuenta
+				   INNER JOIN tbl_Tarjeta
+					ON tbl_Cuenta.IntNumero_Cuenta = tbl_Tarjeta.id_NoCuenta
+					WHERE IntNumero_Tarjeta=@NoTarjeta;
 
-	update tbl_Cajero set fltSaldo =(fltSaldo-@Saldo) where id_Numero_Cajero=@NoCajero;
+				UPDATE tbl_Cajero SET fltSaldo =(fltSaldo-@Saldo) WHERE id_Numero_Cajero=@NoCajero;
+
+		COMMIT TRAN
 
 	END TRY
 	BEGIN CATCH
 		IF(LEN(@MensajeError) = 0)
 			BEGIN
+				ROLLBACK TRAN
 				SET @MensajeError = (SELECT SUBSTRING(ERROR_MESSAGE(), 1, 300))
 			END
 		RAISERROR(@MensajeError, 16, 1)
