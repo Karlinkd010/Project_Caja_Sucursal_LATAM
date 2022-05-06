@@ -188,9 +188,9 @@ namespace Back_Caja_Sucursal_LATAM.Services
                 {
 
                     result = db.Query<Response>("sp_getConsultaSaldoCajero", new { NoCajero= noCajero }, commandType: CommandType.StoredProcedure).FirstOrDefault();
-                    if (respuesta == null)
+                    if (result == null)
                     {
-                        return respuesta = new Response()
+                        return result = new Response()
                         {
                             Estatus = "Incorrecto",
                             Mensaje = "¡Hubo algún Error en el Servidor!"
