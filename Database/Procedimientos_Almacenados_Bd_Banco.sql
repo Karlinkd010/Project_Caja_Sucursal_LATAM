@@ -39,6 +39,29 @@ BEGIN
 END
 go
 
+
+--Valida si existe Tarjeta
+CREATE PROCEDURE sp_getConsultaSaldoCajero(
+	@NoCajero BIGINT = 0
+)
+AS
+BEGIN
+	DECLARE
+		@MensajeError VARCHAR(300) = ''
+	
+	BEGIN TRY
+			SELECT fltSaldo AS Estatus, 'Cajero en funcionamiento' AS Mensaje from tbl_Cajero where id_Numero_Cajero=@NoCajero;
+	END TRY
+	BEGIN CATCH
+		IF(LEN(@MensajeError) = 0)
+			BEGIN
+				SET @MensajeError = (SELECT SUBSTRING(ERROR_MESSAGE(), 1, 300))
+			END
+		RAISERROR(@MensajeError, 16, 1)
+	END CATCH
+END
+go
+
 --Valida Nip
 CREATE PROCEDURE sp_getNip(
 	@NoNip BIGINT = 0,
@@ -140,6 +163,7 @@ BEGIN
 		@MensajeError VARCHAR(300) = ''
 	
 	BEGIN TRY
+
 	Insert into tbl_Transaccion (vchtipo_Accion,Fecha, Cantidad, Id_NoTarjeta,id_NoCajero) values ('Retiro', GETDATE(), @Saldo,@NoTarjeta,@NoCajero);
 
 	UPDATE tbl_Cuenta SET fltSaldo=(fltSaldo-@Saldo) FROM tbl_Cuenta
