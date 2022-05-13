@@ -7,6 +7,7 @@ import { ErrorPageComponent } from './error-page/error-page.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialDesingModule } from './material/material-desing.module';
+import { NgxMaskModule} from 'ngx-mask'
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { MaterialDesingModule } from './material/material-desing.module';
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-    MaterialDesingModule
+    MaterialDesingModule,
+    NgxMaskModule.forRoot()
     
   ],
   providers: [
