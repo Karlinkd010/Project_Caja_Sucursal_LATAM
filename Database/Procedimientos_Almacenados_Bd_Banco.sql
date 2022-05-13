@@ -174,6 +174,7 @@ BEGIN
 
 				UPDATE tbl_Cajero SET fltSaldo =(fltSaldo-@Saldo) WHERE id_Numero_Cajero=@NoCajero;
 
+				SELECT 'Correcto' AS Estatus,'Proceso finalizada, Retiro Exitoso' AS Mensaje;
 		COMMIT TRAN
 
 	END TRY
@@ -194,5 +195,6 @@ SELECT *FROM tbl_Cajero
 
 EXEC sp_getTarjeta 4178545161711
 EXEC sp_getNip 2211,4178545161711
-EXEC sp_getValidaSaldo 1000, 417854516171,201
+EXEC sp_getValidaSaldo 1000, 417854516171,201;
+exec sp_InsertTransaccionRetiro 100,417854516171,201
 494000
