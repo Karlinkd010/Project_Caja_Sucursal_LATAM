@@ -4,3 +4,7 @@ Back_Caja_Sucursal_LATAM/bin/*
 Back_Caja_Sucursal_LATAM/obj/*
 Back_Caja_Sucursal_LATAM/Properties/*
 Back_Caja_Sucursal_LATAM/.editorconfig
+
+Front_Caja_Sucursal_LATAM/node_modules/*
+Front_Caja_Sucursal_LATAM/.vscode/
+Front_Caja_Sucursal_LATAM/.angular/
