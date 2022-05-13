@@ -16,7 +16,7 @@ import { MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatDialogModule} from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { NgxMaskModule} from 'ngx-mask'
+
 
 @NgModule({
   declarations: [],
@@ -36,8 +36,7 @@ import { NgxMaskModule} from 'ngx-mask'
     MatFormFieldModule,
     MatSelectModule,
     FormsModule,
-    MatSnackBarModule,
-    NgxMaskModule
+    MatSnackBarModule
     
   ]
 })
